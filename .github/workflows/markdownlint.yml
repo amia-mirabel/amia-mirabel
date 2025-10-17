@@ -1,0 +1,26 @@
+name: Markdown lint
+
+on:
+  push:
+    paths:
+      - README.md
+      - .markdownlint.json
+      - .github/workflows/markdownlint.yml
+  pull_request:
+    paths:
+      - README.md
+      - .markdownlint.json
+      - .github/workflows/markdownlint.yml
+
+jobs:
+  markdownlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install markdownlint-cli
+        run: npm install --global markdownlint-cli@0.37.0
+      - name: Run markdownlint
+        run: markdownlint README.md
